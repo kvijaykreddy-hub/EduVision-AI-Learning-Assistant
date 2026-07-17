@@ -1,0 +1,32 @@
+Metadata-Version: 2.4
+Name: eduvision-ai-learning-assistant
+Version: 0.1.0
+Summary: Add your description here
+Requires-Python: <3.13,>=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: langchain>=1.3.14
+Requires-Dist: langchain-community>=0.4.2
+Requires-Dist: langchain-huggingface>=1.2.2
+Requires-Dist: pillow>=12.3.0
+Requires-Dist: python-dotenv>=1.2.2
+Requires-Dist: requests>=2.34.2
+Requires-Dist: streamlit>=1.59.2
+
+# EduVision AI - Learning Assistant
+
+An AI-powered educational assistant built using LangChain, Hugging Face, and Streamlit.
+
+## Features
+
+- Question Answering
+- Text Summarization
+- Quiz Generation
+- OCR
+- Image Classification
+
+## Tech Stack
+
+- Python
+- Streamlit
+- LangChain
+- Hugging Face
