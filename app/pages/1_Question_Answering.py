@@ -1,85 +1,49 @@
-import time
-
 import streamlit as st
 
-from eduvision_ai.services.llm_service import LLMService
+from eduvision_ai.services.qa_service import QAService
 
-
-# ---------------------------------------------------------
-# Page Configuration
-# ---------------------------------------------------------
 st.set_page_config(
     page_title="Question Answering",
-    page_icon="🤖",
+    page_icon="❓",
 )
 
-# ---------------------------------------------------------
-# Title
-# ---------------------------------------------------------
-st.title("🤖 Question Answering")
+st.title("❓ Question Answering")
 
 st.write(
-    "Ask any question and get an AI-generated answer."
+    "Ask any educational question and get an AI-powered answer."
 )
 
-st.divider()
-
-# ---------------------------------------------------------
-# Question Input
-# ---------------------------------------------------------
 question = st.text_area(
-    label="Enter your question",
-    placeholder="Example: Explain Retrieval-Augmented Generation (RAG).",
-    height=150,
+    "Enter your question:",
+    height=180,
+    placeholder="Example: Explain the concept of Machine Learning.",
 )
 
-# Character Counter
 st.caption(f"Characters: {len(question)}")
 
-# ---------------------------------------------------------
-# Submit Button
-# ---------------------------------------------------------
-generate = st.button(
-    "🚀 Get Answer",
+service = QAService()
+
+if st.button(
+    "Get Answer",
     type="primary",
     disabled=not question.strip(),
-)
+):
 
-# ---------------------------------------------------------
-# Process Question
-# ---------------------------------------------------------
-if generate:
-
-    service = LLMService()
-
-    with st.spinner("🤖 Gemini is thinking..."):
-
-        start = time.perf_counter()
+    with st.spinner("Generating answer..."):
 
         try:
-
-            answer = service.ask(question)
-
-            end = time.perf_counter()
-
-            response_time = end - start
+            result = service.ask(question)
 
             st.success(
-                f"✅ Answer generated successfully in {response_time:.2f} seconds."
+                f"Answer generated successfully in "
+                f"{result.response_time:.2f} seconds."
             )
 
-            st.divider()
+            st.caption(f"Model: {result.model}")
 
-            with st.container(border=True):
+            st.markdown("### Answer")
 
-                st.subheader("📖 Answer")
-
-                st.write(answer)
+            st.container(border=True).write(result.content)
 
         except Exception as e:
-
-            st.error("❌ Unable to generate answer.")
-
-            with st.expander("View Error Details"):
-
-                st.code(str(e))
+            st.error(f"Error: {e}")
